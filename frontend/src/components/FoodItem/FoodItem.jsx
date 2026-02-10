@@ -2,7 +2,7 @@ import React from 'react'
 import './FoodItem.css'
 import { assets } from '../../assets/assets'
 import { useContext } from 'react'
-import { StoreContext } from '../../Context/StoreContext'
+import { StoreContext } from '../../context/StoreContext'
 import toast from 'react-hot-toast'
 
 
@@ -14,17 +14,34 @@ const FoodItem = ({id, name, price, description, image}) => {
             addToCart(itemId);
             toast.success(`${itemName} added to cart! 🛒`, {
                 style: {
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
                     color: '#fff',
                     fontWeight: '600',
                     padding: '16px 24px',
                 },
                 iconTheme: {
                     primary: '#fff',
-                    secondary: '#667eea',
+                    secondary: '#10b981',
                 },
             });
         };
+
+        const handleRemoveFromCart = (itemId, itemName) => {
+            removeFromCart(itemId);
+            toast.error(`${itemName} removed from cart! ❌`, {
+                style: {
+                    background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                    color: '#fff',
+                    fontWeight: '600',
+                    padding: '16px 24px',
+                },
+                iconTheme: {
+                    primary: '#fff',
+                    secondary: '#ef4444',
+                },
+            });
+        };
+
 return (
     <div className='food-item'>
 
@@ -33,7 +50,7 @@ return (
             {!cartItems[id]
                 ?<img className='add' onClick={()=>handleAddToCart(id, name)} src={assets.add_icon_white} />
                 :<div className='food-item-counter'>
-                    <img onClick={()=>removeFromCart(id)} src={assets.remove_icon_red} alt=""/>
+                    <img onClick={()=>handleRemoveFromCart(id, name)} src={assets.remove_icon_red} alt=""/>
                     <p>{cartItems[id]}</p>
                     <img onClick={()=>handleAddToCart(id, name)} src={assets.add_icon_green} alt=""/>
 
